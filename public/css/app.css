@@ -1,0 +1,18 @@
+.boxside {
+
+  border : 1px solid #B6D7F2;
+
+}
+
+.boxbackground {
+
+
+  text-align: center;
+  line-height: 20px;
+  font-size: 0.3em;
+
+}
+
+.boxbackgroundselected {
+    background-color:  rgb(224, 234, 201);
+}

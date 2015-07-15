@@ -34,13 +34,24 @@ function App(scene) {
     }
 
 
-    this.boxNav = new BoxNavPanel(this.rootNode.addChild(),this.context);
+    this.boxNav = new BoxNavPanel(scene.addChild(),this.context,"box",0.9,0.8);
+    this.boxNav = new BoxNavPanel(scene.addChild(),this.context,"root",0.025,0.8);
 
-    this.firstNode = new BoxNode(this.rootNode.addChild(),150,70,50,'rgb(244, 225, 173)',this.context);
-    this.firstNode.getParentNode().setPosition(50,50,100);
+    this.firstNode = new BoxNode(this.rootNode.addChild(),"Checkout",150,70,50,'rgb(244, 225, 173)',this.context);
+    this.firstNode.getParentNode().setPosition(50,150,100);
 
-    this.firstRotation = new Rotation(this.firstNode.getParentNode());
-    this.firstRotation.set(0,Math.PI,0,{duration : 5000});
+    this.secondNode = new BoxNode(this.rootNode.addChild(),"Review",150,70,50,'rgb(215, 208, 229)',this.context);
+    this.secondNode.getParentNode().setPosition(300,150,100);
+
+    this.thirdNode = new BoxNode(this.rootNode.addChild(),"Shipping",150,70,50,'rgb(234, 213, 193)',this.context);
+    this.thirdNode.getParentNode().setPosition(550,150,100);
+
+    this.fourthNode = new BoxNode(this.rootNode.addChild(),"Payment",150,70,50,'rgb(117, 218, 188)',this.context);
+    this.fourthNode.getParentNode().setPosition(800,150,100);
+
+    this.fifthNode = new BoxNode(this.rootNode.addChild(),"Complete",150,70,50,'rgb(173, 213, 228)',this.context);
+    this.fifthNode.getParentNode().setPosition(1050,150,500);
+
 
 
     this.expanderDIV = new DOMElement(this.rootNode, {
@@ -58,13 +69,13 @@ function App(scene) {
 
       console.log(event, payload);
 
-      if(event==='top'){
+      if(event==='box-top'){
           if(this.selElement) this.selElement.rotate("pos","x");
-      } else if(event==='bottom'){
+      } else if(event==='box-bottom'){
           if(this.selElement) this.selElement.rotate("neg","x");
-      } else if(event==='right'){
+      } else if(event==='box-right'){
           if(this.selElement) this.selElement.rotate("pos","y");
-      } else if (event==='left'){
+      } else if (event==='box-left'){
           if(this.selElement) this.selElement.rotate("neg","y");
       }
     }
@@ -77,5 +88,12 @@ App.prototype.setSelectedBox = function(el){
   console.log(el);
 
 }
+
+App.prototype.unsetSelectedBox = function(el){
+
+  this.rootNode.selElement = null;
+
+}
+
 
 module.exports = App;

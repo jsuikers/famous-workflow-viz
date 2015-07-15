@@ -1,15 +1,16 @@
 var DOMElement = require('famous/dom-renderables/DOMElement');
 
-function BoxNavPanel(pnode,pcontext){
+function BoxNavPanel(pnode,pcontext,pname,pxalign,pyalign){
 
   var that = this;
 
   this.containerNode = pnode;
   this.context = pcontext;
+  this.name = pname;
 
   this.containerNode.setSizeMode('absolute', 'absolute', 'absolute')
           .setAbsoluteSize(100, 100)
-          .setAlign(0.9,0.8);
+          .setAlign(pxalign,pyalign);
 
   this.topArrow = this.containerNode.addChild()
   this.topArrow.setSizeMode('absolute', 'absolute')
@@ -20,7 +21,7 @@ function BoxNavPanel(pnode,pcontext){
 
   this.topArrow.onReceive = function(event,payload){
     if(event==='click'){
-       that.context.appscene.emit('top',{payload:"dummy"});
+       that.context.appscene.emit(that.name + '-top',{payload:"dummy"});
 
     }
   }
@@ -49,7 +50,7 @@ function BoxNavPanel(pnode,pcontext){
 
   this.bottomArrow.onReceive = function(event,payload){
     if(event==='click'){
-       that.context.appscene.emit('bottom',{payload:"dummy"});
+       that.context.appscene.emit(that.name + '-bottom',{payload:"dummy"});
 
     }
   }
@@ -79,7 +80,7 @@ function BoxNavPanel(pnode,pcontext){
 
   this.rightArrow.onReceive = function(event,payload){
     if(event==='click'){
-       that.context.appscene.emit('right',{payload:"dummy"});
+       that.context.appscene.emit(that.name + '-right',{payload:"dummy"});
 
     }
   }
@@ -109,7 +110,7 @@ function BoxNavPanel(pnode,pcontext){
 
   this.leftArrow.onReceive = function(event,payload){
     if(event==='click'){
-         that.context.appscene.emit('left',{payload:"dummy"});
+         that.context.appscene.emit(that.name + '-left',{payload:"dummy"});
 
     }
   }
