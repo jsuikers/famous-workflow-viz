@@ -25,6 +25,7 @@ function App(scene) {
 
     this.rootNode.setSizeMode(1,1,1)
         .setAbsoluteSize(APP_WIDTH - (APP_OFFSET * 2),APP_HEIGHT - (APP_OFFSET * 2),-APP_DEPTH)
+        .setOrigin(0.5,0.5)
         .setPosition(APP_OFFSET,APP_OFFSET);
 
 
@@ -33,6 +34,10 @@ function App(scene) {
       approot  : this
     }
 
+    var rootXAngle = 0;
+    var rootYAngle = 0;
+    var rootRotation = new Rotation(this.rootNode);
+    rootRotation.set(rootXAngle,rootYAngle,0);
 
     this.boxNav = new BoxNavPanel(scene.addChild(),this.context,"box",0.9,0.8);
     this.boxNav = new BoxNavPanel(scene.addChild(),this.context,"root",0.025,0.8);
@@ -50,7 +55,7 @@ function App(scene) {
     this.fourthNode.getParentNode().setPosition(800,150,100);
 
     this.fifthNode = new BoxNode(this.rootNode.addChild(),"Complete",150,70,50,'rgb(173, 213, 228)',this.context);
-    this.fifthNode.getParentNode().setPosition(1050,150,500);
+    this.fifthNode.getParentNode().setPosition(1050,150,100);
 
 
 
@@ -77,6 +82,22 @@ function App(scene) {
           if(this.selElement) this.selElement.rotate("pos","y");
       } else if (event==='box-left'){
           if(this.selElement) this.selElement.rotate("neg","y");
+      }
+      else if (event==='root-top'){
+          rootXAngle += Math.PI/12;
+          rootRotation.set(rootXAngle,rootYAngle,0,{duration : 1000});
+      }
+      else if (event==='root-bottom'){
+          rootXAngle -= Math.PI/12;
+          rootRotation.set(rootXAngle,rootYAngle,0,{duration : 1000});
+      }
+      else if (event==='root-left'){
+          rootYAngle -= Math.PI/12;
+          rootRotation.set(rootXAngle,rootYAngle,0,{duration : 1000});
+      }
+      else if (event==='root-right'){
+          rootYAngle += Math.PI/12;
+          rootRotation.set(rootXAngle,rootYAngle,0,{duration : 1000});
       }
     }
 

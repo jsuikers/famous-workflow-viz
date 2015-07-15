@@ -10,11 +10,13 @@ function BoxNavPanel(pnode,pcontext,pname,pxalign,pyalign){
 
   this.containerNode.setSizeMode('absolute', 'absolute', 'absolute')
           .setAbsoluteSize(100, 100)
+          .setPosition(0,0,500)
           .setAlign(pxalign,pyalign);
 
   this.topArrow = this.containerNode.addChild()
   this.topArrow.setSizeMode('absolute', 'absolute')
           .setAbsoluteSize(25, 25)
+
           .setAlign(0.25,0);
 
   this.topArrow.addUIEvent('click');
@@ -130,21 +132,98 @@ function BoxNavPanel(pnode,pcontext,pname,pxalign,pyalign){
   this.leftDom.setProperty('zIndex', '2');
   this.leftDom.setProperty('cursor', 'pointer');
 
-  this.centerArrow = this.containerNode.addChild()
-  this.centerArrow.setSizeMode('absolute', 'absolute')
-            .setAbsoluteSize(50, 50)
+  this.nwArrow = this.containerNode.addChild()
+  this.nwArrow.setSizeMode('absolute', 'absolute')
+            .setAbsoluteSize(25, 25)
             .setAlign(.25,0.25)
 
+  this.nwArrow.onReceive = function(event,payload){
+    if(event==='click'){
+         that.context.appscene.emit(that.name + '-nw',{payload:"dummy"});
+    }
+  }
 
-  this.centerDom = new DOMElement(this.centerArrow, {
+
+  this.nwDom = new DOMElement(this.nwArrow, {
     id : 'centerButton',
     properties:{
-        'border-radius': '50%',
-        'background-color' : 'black'
+        'border-radius': '25px 0 0 0',
+        'background-color' : 'black',
+        'border' :'1px solid white'
     }
   });
-  this.centerDom.setProperty('zIndex', '2');
-  this.centerDom.setProperty('cursor', 'pointer');
+  this.nwDom.setProperty('zIndex', '2');
+  this.nwDom.setProperty('cursor', 'pointer');
+
+  this.neArrow = this.containerNode.addChild()
+  this.neArrow.setSizeMode('absolute', 'absolute')
+            .setAbsoluteSize(25, 25)
+            .setAlign(.5,0.25)
+
+  this.neArrow.onReceive = function(event,payload){
+    if(event==='click'){
+         that.context.appscene.emit(that.name + '-ne',{payload:"dummy"});
+    }
+  }
+
+
+  this.neDom = new DOMElement(this.neArrow, {
+    id : 'centerButton',
+    properties:{
+        'border-radius': '0px 25px 0 0',
+        'background-color' : 'black',
+        'border' :'1px solid white'
+    }
+  });
+  this.neDom.setProperty('zIndex', '2');
+  this.neDom.setProperty('cursor', 'pointer');
+
+  this.seArrow = this.containerNode.addChild()
+  this.seArrow.setSizeMode('absolute', 'absolute')
+            .setAbsoluteSize(25, 25)
+            .setAlign(.5,0.5)
+
+  this.seArrow.onReceive = function(event,payload){
+    if(event==='click'){
+         that.context.appscene.emit(that.name + '-se',{payload:"dummy"});
+    }
+  }
+
+
+  this.seDom = new DOMElement(this.seArrow, {
+    id : 'centerButton',
+    properties:{
+        'border-radius': '0px 0px 25px 0',
+        'background-color' : 'black',
+        'border' :'1px solid white'
+    }
+  });
+  this.seDom.setProperty('zIndex', '2');
+  this.seDom.setProperty('cursor', 'pointer');
+
+  this.swArrow = this.containerNode.addChild()
+  this.swArrow.setSizeMode('absolute', 'absolute')
+            .setAbsoluteSize(25, 25)
+            .setAlign(.25,0.5)
+
+  this.swArrow.onReceive = function(event,payload){
+    if(event==='click'){
+         that.context.appscene.emit(that.name + '-sw',{payload:"dummy"});
+    }
+  }
+
+
+  this.swDom = new DOMElement(this.swArrow, {
+    id : 'centerButton',
+    properties:{
+        'border-radius': '0px 0px 0px 25px',
+        'background-color' : 'black',
+        'border' :'1px solid white'
+    }
+  });
+  this.swDom.setProperty('zIndex', '2');
+  this.swDom.setProperty('cursor', 'pointer');
+
 
 
 }
