@@ -9,8 +9,8 @@ var Rotation = require('famous/components/Rotation');
 var Position = require('famous/components/Position');
 
 var BoxNode = require('./boxNode.js');
-
 var BoxNavPanel = require('./boxNavPanel.js');
+var Connector = require('./connector.js');
 
 function App(scene) {
 
@@ -56,6 +56,18 @@ function App(scene) {
 
     this.fifthNode = new BoxNode(this.rootNode.addChild(),"Complete",150,70,50,'rgb(173, 213, 228)',this.context);
     this.fifthNode.getParentNode().setPosition(1050,150,100);
+
+    this.connectorOne = new Connector(this.rootNode.addChild(),100,1,1);
+    this.connectorOne.getParentNode().setPosition(200,180,50);
+
+    this.connectorTwo = new Connector(this.rootNode.addChild(),100,1,1);
+    this.connectorTwo.getParentNode().setPosition(450,180,50);
+
+    this.connectorThree = new Connector(this.rootNode.addChild(),100,1,1);
+    this.connectorThree.getParentNode().setPosition(700,180,50);
+
+    this.connectorFour = new Connector(this.rootNode.addChild(),100,1,1);
+    this.connectorFour.getParentNode().setPosition(950,180,50);
 
 
 

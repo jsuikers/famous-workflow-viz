@@ -145,7 +145,7 @@ function BoxNavPanel(pnode,pcontext,pname,pxalign,pyalign){
 
 
   this.nwDom = new DOMElement(this.nwArrow, {
-    id : 'centerButton',
+    id : 'nwButton',
     properties:{
         'border-radius': '25px 0 0 0',
         'background-color' : 'black',
@@ -168,7 +168,7 @@ function BoxNavPanel(pnode,pcontext,pname,pxalign,pyalign){
 
 
   this.neDom = new DOMElement(this.neArrow, {
-    id : 'centerButton',
+    id : 'neButton',
     properties:{
         'border-radius': '0px 25px 0 0',
         'background-color' : 'black',
@@ -191,7 +191,7 @@ function BoxNavPanel(pnode,pcontext,pname,pxalign,pyalign){
 
 
   this.seDom = new DOMElement(this.seArrow, {
-    id : 'centerButton',
+    id : 'seButton',
     properties:{
         'border-radius': '0px 0px 25px 0',
         'background-color' : 'black',
@@ -214,7 +214,7 @@ function BoxNavPanel(pnode,pcontext,pname,pxalign,pyalign){
 
 
   this.swDom = new DOMElement(this.swArrow, {
-    id : 'centerButton',
+    id : 'swButton',
     properties:{
         'border-radius': '0px 0px 0px 25px',
         'background-color' : 'black',
