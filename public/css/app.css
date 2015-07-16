@@ -6,13 +6,13 @@
 
 .boxbackground {
 
-
+  background-color:  rgb(224, 234, 201);
   text-align: center;
   line-height: 20px;
-  font-size: 0.3em;
+  font-size: 1em;
 
 }
 
 .boxbackgroundselected {
-    background-color:  rgb(224, 234, 201);
+    background-color:  rgb(209, 219, 187);
 }

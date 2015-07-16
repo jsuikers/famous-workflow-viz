@@ -137,6 +137,8 @@ function BoxNavPanel(pnode,pcontext,pname,pxalign,pyalign){
             .setAbsoluteSize(25, 25)
             .setAlign(.25,0.25)
 
+  this.nwArrow.addUIEvent('click');
+
   this.nwArrow.onReceive = function(event,payload){
     if(event==='click'){
          that.context.appscene.emit(that.name + '-nw',{payload:"dummy"});
@@ -159,6 +161,8 @@ function BoxNavPanel(pnode,pcontext,pname,pxalign,pyalign){
   this.neArrow.setSizeMode('absolute', 'absolute')
             .setAbsoluteSize(25, 25)
             .setAlign(.5,0.25)
+
+  this.neArrow.addUIEvent('click');
 
   this.neArrow.onReceive = function(event,payload){
     if(event==='click'){
@@ -183,6 +187,8 @@ function BoxNavPanel(pnode,pcontext,pname,pxalign,pyalign){
             .setAbsoluteSize(25, 25)
             .setAlign(.5,0.5)
 
+  this.seArrow.addUIEvent('click');
+
   this.seArrow.onReceive = function(event,payload){
     if(event==='click'){
          that.context.appscene.emit(that.name + '-se',{payload:"dummy"});
@@ -205,6 +211,8 @@ function BoxNavPanel(pnode,pcontext,pname,pxalign,pyalign){
   this.swArrow.setSizeMode('absolute', 'absolute')
             .setAbsoluteSize(25, 25)
             .setAlign(.25,0.5)
+
+  this.swArrow.addUIEvent('click');
 
   this.swArrow.onReceive = function(event,payload){
     if(event==='click'){

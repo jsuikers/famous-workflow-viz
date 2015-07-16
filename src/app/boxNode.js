@@ -46,15 +46,11 @@ function BoxNode(pparentNode, pcaption ,pwidth , pheight ,pdepth,pcolor,pcontext
       if(this.isSelected){
 
         this.context.approot.unsetSelectedBox(this.container);
-        this.backgroundDom.removeClass('boxbackgroundselected');
-        this.isSelected = false;
 
       } else {
 
         this.context.approot.setSelectedBox(this.container);
-        this.backgroundDom.addClass('boxbackgroundselected');
-        this.isSelected = true;
-
+        
       }
 
     }
@@ -71,13 +67,14 @@ BoxNode.prototype.getParentNode = function(){
 BoxNode.prototype.select = function(){
 
   this.parentNode.backgroundDom.addClass('boxbackgroundselected');
+  this.isSelected = true;
 
 }
 
 BoxNode.prototype.deselect = function(){
 
   this.parentNode.backgroundDom.removeClass('boxbackgroundselected');
-
+  this.isSelected = false;
 }
 
 

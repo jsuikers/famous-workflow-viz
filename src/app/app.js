@@ -7,6 +7,8 @@ var Position = require('famous/components/Position');
 
 var Rotation = require('famous/components/Rotation');
 var Position = require('famous/components/Position');
+var Camera = require('famous/components/Camera');
+
 
 var BoxNode = require('./boxNode.js');
 var BoxNavPanel = require('./boxNavPanel.js');
@@ -20,6 +22,8 @@ function App(scene) {
     var APP_OFFSET = 25;
 
 
+    var that = this;
+
     this.rootNode = scene.addChild();
     this.rootNode.selElement = null;
 
@@ -28,7 +32,9 @@ function App(scene) {
         .setOrigin(0.5,0.5)
         .setPosition(APP_OFFSET,APP_OFFSET);
 
-
+    var rootCam = new Camera(scene);
+    rootCam.setDepth(100000);
+    //rootCam.setFlat();
     this.context = {
       appscene : scene,
       approot  : this
@@ -36,6 +42,7 @@ function App(scene) {
 
     var rootXAngle = 0;
     var rootYAngle = 0;
+
     var rootRotation = new Rotation(this.rootNode);
     rootRotation.set(rootXAngle,rootYAngle,0);
 
@@ -57,21 +64,38 @@ function App(scene) {
     this.fifthNode = new BoxNode(this.rootNode.addChild(),"Complete",150,70,50,'rgb(173, 213, 228)',this.context);
     this.fifthNode.getParentNode().setPosition(1050,150,100);
 
-    this.connectorOne = new Connector(this.rootNode.addChild(),100,1,1);
-    this.connectorOne.getParentNode().setPosition(200,180,50);
+    this.connectorOne = new Connector(this.rootNode.addChild(),80,1,1);
+    this.connectorOne.getParentNode().setPosition(210,180,50);
 
-    this.connectorTwo = new Connector(this.rootNode.addChild(),100,1,1);
-    this.connectorTwo.getParentNode().setPosition(450,180,50);
+    this.connectorTwo = new Connector(this.rootNode.addChild(),80,1,1);
+    this.connectorTwo.getParentNode().setPosition(460,180,50);
 
-    this.connectorThree = new Connector(this.rootNode.addChild(),100,1,1);
-    this.connectorThree.getParentNode().setPosition(700,180,50);
+    this.connectorThree = new Connector(this.rootNode.addChild(),80,1,1);
+    this.connectorThree.getParentNode().setPosition(710,180,50);
 
-    this.connectorFour = new Connector(this.rootNode.addChild(),100,1,1);
-    this.connectorFour.getParentNode().setPosition(950,180,50);
+    this.connectorFour = new Connector(this.rootNode.addChild(),80,1,1);
+    this.connectorFour.getParentNode().setPosition(960,180,50);
+
+
+    var rootZPosition = 150;
+    this.backgroundNode = this.rootNode.addChild();
+    var rootPosition = new Position(this.backgroundNode);
+    //rootPosition.set(APP_OFFSET,APP_OFFSET,rootZPosition);
+    rootPosition.set(0,0,rootZPosition);
+
+    this.backgroundNode.addUIEvent('click');
+
+    this.backgroundNode.onReceive = function(event,payload){
+
+      if(event==='click'){
+          that.context.appscene.emit("deselect");
+      }
 
 
 
-    this.expanderDIV = new DOMElement(this.rootNode, {
+    }
+
+    this.expanderDIV = new DOMElement(this.backgroundNode, {
        //content : "Famous Collaboration",
        properties:{
          'background-color':'rgb(229, 240, 201)',
@@ -111,22 +135,56 @@ function App(scene) {
           rootYAngle += Math.PI/12;
           rootRotation.set(rootXAngle,rootYAngle,0,{duration : 1000});
       }
+      else if (event==='root-nw'){
+          rootZPosition -= 25;
+          rootPosition.set(0,0,rootZPosition,{duration : 1000});
+      }
+      else if (event==='root-ne'){
+          rootZPosition += 25;
+          rootPosition.set(0,0,rootZPosition,{duration : 1000});
+      }
+      else if (event==='deselect'){
+          that.unsetCurrSelectedBox();
+      }
+
+
     }
 
 }
 
 App.prototype.setSelectedBox = function(el){
 
+  if(this.rootNode.selElement){
+      this.rootNode.selElement.deselect();
+  }
+
   this.rootNode.selElement = el;
+  this.rootNode.selElement.select();
   console.log(el);
 
 }
 
 App.prototype.unsetSelectedBox = function(el){
 
+  if(this.rootNode.selElement){
+      this.rootNode.selElement.deselect();
+  }
+
   this.rootNode.selElement = null;
 
 }
+
+App.prototype.unsetCurrSelectedBox = function(){
+
+  if(this.rootNode.selElement){
+      this.rootNode.selElement.deselect();
+      this.rootNode.selElement = null;
+  }
+
+
+
+}
+
 
 
 module.exports = App;
