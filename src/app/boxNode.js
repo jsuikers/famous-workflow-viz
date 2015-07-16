@@ -7,7 +7,7 @@ var Size = require('famous/components/Size');
 var Position = require('famous/components/Position');
 var Rotation = require('famous/components/Rotation');
 
-function BoxNode(pparentNode, pcaption ,pwidth , pheight ,pdepth,pcolor,pcontext){
+function BoxNode(pparentNode, pcaption ,pwidth , pheight ,pdepth,pcolor,pcontext,psidecaptions){
 
   this.boxnode = pparentNode;
   this.parentNode = this.boxnode.addChild();
@@ -16,6 +16,7 @@ function BoxNode(pparentNode, pcaption ,pwidth , pheight ,pdepth,pcolor,pcontext
   this.depth = pdepth;
   this.color = pcolor;
   this.caption = pcaption;
+  this.sidecaptions = psidecaptions;
 
   this.parentNode.context = pcontext;
   this.parentNode.container = this;
@@ -50,7 +51,7 @@ function BoxNode(pparentNode, pcaption ,pwidth , pheight ,pdepth,pcolor,pcontext
       } else {
 
         this.context.approot.setSelectedBox(this.container);
-        
+
       }
 
     }
@@ -106,6 +107,22 @@ BoxNode.prototype.rotate = function(dir,axis){
 
 }
 
+BoxNode.prototype.addData = function(side,data){
+
+    var affectedSide = '#' + this.caption + '-' + side;
+
+
+    //$(affectedSide).sparkline(data.data,{type : data.type});
+
+    //$(affectedSide).sparkline([5,6,7,2,0,-4,-2,4,8,10], {type: 'bar'});
+
+    $(affectedSide + " .content").html('<span class="' + data.type + '">' + data.data + '</span>');
+
+    $(affectedSide + " .content").peity(data.type,{height : 40 , width : data.width});
+    $(affectedSide + " .heading").html(this.sidecaptions[side]);
+
+}
+
 function _createBackground(){
 
   this.parentNode.backgroundNode = this.boxnode.addChild();
@@ -128,12 +145,16 @@ function _createSides(){
                                .setAbsoluteSize(this.width, this.height);
 
   this.sidesDOMContainer.front = new DOMElement(this.sidesNodeContainer.front, {
+                          id : this.caption + '-front',
+                          content : '<div class="box-side box-front"><div class="heading"></div><div class="content"></div></div>',
                           classes : ['boxside'],
                           properties:{
                             'background-color':this.color,
 
                           }
                         });
+
+  //this.sidesDOMContainer.front.setProperty('z-index',1000);
 
   this.sidesNodeContainer.front.addUIEvent('click');
 
@@ -146,6 +167,8 @@ function _createSides(){
   this.sidesNodeContainer.left.addUIEvent('click');
 
   this.sidesDOMContainer.left = new DOMElement(this.sidesNodeContainer.left, {
+                          id : this.caption + '-left',
+                          content : '<div class="box-side box-front"><div class="heading"></div><div class="content"></div></div>',
                           classes : ['boxside'],
                           properties:{
                             'background-color':this.color,
@@ -162,7 +185,8 @@ function _createSides(){
           .setPosition(this.width,0,0);
 
   this.sidesDOMContainer.right = new DOMElement(this.sidesNodeContainer.right, {
-        id : "rightDom",
+        id : this.caption + '-right',
+        content : '<div class="box-side box-front"><div class="heading"></div><div class="content"></div></div>',
         classes : ['boxside'],
         properties:{
           'background-color':this.color
@@ -182,6 +206,7 @@ function _createSides(){
   this.sidesNodeContainer.back.addUIEvent('click');
 
   this.sidesDOMContainer.back = new DOMElement(this.sidesNodeContainer.back, {
+      id : this.caption + '-back',
       classes : ['boxside'],
       properties:{
       'background-color':this.color
@@ -197,7 +222,7 @@ function _createSides(){
 
   this.sidesNodeContainer.bottom.addUIEvent('click');
   this.sidesDOMContainer.bottom = new DOMElement(this.sidesNodeContainer.bottom, {
-    id : "bottomDom",
+    id : this.caption + '-bottom',
     classes : ['boxside'],
     properties:{
       'background-color':this.color
@@ -215,7 +240,7 @@ function _createSides(){
   this.sidesNodeContainer.top.addUIEvent('click');
 
   this.sidesDOMContainer.top = new DOMElement(this.sidesNodeContainer.top, {
-    id : "topDom",
+    id : this.caption + '-top',
     classes : ['boxside'],
     properties:{
       'background-color':this.color

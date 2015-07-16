@@ -12,7 +12,30 @@ var Camera = require('famous/components/Camera');
 
 var BoxNode = require('./boxNode.js');
 var BoxNavPanel = require('./boxNavPanel.js');
+var ToolPanel = require('./ToolPanel.js');
 var Connector = require('./connector.js');
+
+var DATA_SET = [
+  "5,0,1,14,12,15,10,18,14,3,10,8,7,1,5",
+  "5,20,20,14,41",
+  "25,25,40,10",
+  "5,10,10,14,2,5,10,8,4,3,1,4,21,10,15",
+  "5,10,8,4,10,25",
+  "5,10,8,4,10,20",
+  "4,1,1,8,5,5,8,7,1,1,1,14,11,1,12",
+  "50,1,80,45,101,25",
+  "5,101,28,40,10,202",
+  "41,10,31,38,25,35,18,17,10,13,17,24,31,41,42",
+  "50,1,80,45,101,25",
+  "5,101,28,40,10,202",
+  "11,10,21,18,15,15,18,17,17,13,17,14,21,21,23",
+  "50,1,80,45,101,35",
+  "5,101,28,40,102",
+
+];
+
+var DATA_POINTER = 0;
+
 
 function App(scene) {
 
@@ -49,19 +72,27 @@ function App(scene) {
     this.boxNav = new BoxNavPanel(scene.addChild(),this.context,"box",0.9,0.8);
     this.boxNav = new BoxNavPanel(scene.addChild(),this.context,"root",0.025,0.8);
 
-    this.firstNode = new BoxNode(this.rootNode.addChild(),"Checkout",150,70,50,'rgb(244, 225, 173)',this.context);
+    this.mainNav = new ToolPanel(scene.addChild(),this.context);
+
+
+    this.firstNode = new BoxNode(this.rootNode.addChild(),"Checkout",150,70,50,'rgb(244, 225, 173)',this.context,{front : "Checkouts per hr." , left : "Entry" , right : "Exits"});
     this.firstNode.getParentNode().setPosition(50,150,100);
 
-    this.secondNode = new BoxNode(this.rootNode.addChild(),"Review",150,70,50,'rgb(215, 208, 229)',this.context);
+    this.secondNode = new BoxNode(this.rootNode.addChild(),"Review",150,70,50,'rgb(215, 208, 229)',this.context,{front : "Reviews per hr." , left : "Entry" , right : "Exits"});
     this.secondNode.getParentNode().setPosition(300,150,100);
 
-    this.thirdNode = new BoxNode(this.rootNode.addChild(),"Shipping",150,70,50,'rgb(234, 213, 193)',this.context);
+
+
+    this.thirdNode = new BoxNode(this.rootNode.addChild(),"Shipping",150,70,50,'rgb(234, 213, 193)',this.context,{front : "Shipping req per hr." , left : "Entry" , right : "Exits"});
     this.thirdNode.getParentNode().setPosition(550,150,100);
 
-    this.fourthNode = new BoxNode(this.rootNode.addChild(),"Payment",150,70,50,'rgb(117, 218, 188)',this.context);
+
+
+
+    this.fourthNode = new BoxNode(this.rootNode.addChild(),"Payment",150,70,50,'rgb(117, 218, 188)',this.context,{front : "Payments per hr." , left : "Entry" , right : "Exits"});
     this.fourthNode.getParentNode().setPosition(800,150,100);
 
-    this.fifthNode = new BoxNode(this.rootNode.addChild(),"Complete",150,70,50,'rgb(173, 213, 228)',this.context);
+    this.fifthNode = new BoxNode(this.rootNode.addChild(),"Complete",150,70,50,'rgb(173, 213, 228)',this.context,{front : "Order completions per hr." , left : "Entry" , right : "Exits"});
     this.fifthNode.getParentNode().setPosition(1050,150,100);
 
     this.connectorOne = new Connector(this.rootNode.addChild(),80,1,1);
@@ -77,7 +108,7 @@ function App(scene) {
     this.connectorFour.getParentNode().setPosition(960,180,50);
 
 
-    var rootZPosition = 150;
+    var rootZPosition = 25;
     this.backgroundNode = this.rootNode.addChild();
     var rootPosition = new Position(this.backgroundNode);
     //rootPosition.set(APP_OFFSET,APP_OFFSET,rootZPosition);
@@ -150,6 +181,8 @@ function App(scene) {
 
     }
 
+    //this.firstNode.addData('front',null);
+
 }
 
 App.prototype.setSelectedBox = function(el){
@@ -181,7 +214,16 @@ App.prototype.unsetCurrSelectedBox = function(){
       this.rootNode.selElement = null;
   }
 
+}
 
+
+App.prototype.populateData = function(){
+
+  if(this.rootNode.selElement){
+      this.rootNode.selElement.addData('front',{data : DATA_SET[DATA_POINTER++] , type :'bar' , width : 120});
+      this.rootNode.selElement.addData('left',{data : DATA_SET[DATA_POINTER++] , type :'donut' , width : 40});
+      this.rootNode.selElement.addData('right',{data : DATA_SET[DATA_POINTER++] , type :'donut' , width : 40});
+  }
 
 }
 

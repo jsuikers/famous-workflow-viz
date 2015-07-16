@@ -16,3 +16,25 @@
 .boxbackgroundselected {
     background-color:  rgb(209, 219, 187);
 }
+
+.toolpanel {
+  opacity : 0.5;
+  cursor : pointer;
+  padding : 5px 2px 5px 2px;
+}
+
+.toolpanel:hover {
+  opacity : 1;
+
+}
+
+.box-side {
+
+  text-align:center;
+
+}
+
+.heading {
+  font-size:75%;
+  padding: 5px;
+}
