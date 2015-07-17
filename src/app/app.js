@@ -64,6 +64,9 @@ function App(scene) {
         .setOrigin(0.5,0.5)
         .setPosition(APP_OFFSET,APP_OFFSET);
 
+    this.rootWidth = APP_WIDTH - (APP_OFFSET * 2);
+    this.rootHeight = APP_HEIGHT - (APP_OFFSET * 2);
+
     //var rootCam = new Camera(scene);
     //rootCam.setDepth(100000);
     //rootCam.setFlat();
@@ -71,6 +74,8 @@ function App(scene) {
       appscene : scene,
       approot  : this
     }
+
+    this.isZoomed = false;
 
     var rootXAngle = 0;
     var rootYAngle = 0;
@@ -102,7 +107,7 @@ function App(scene) {
 
 
     this.fourthNode = new BoxNode(this.rootNode.addChild(),"Payment",150,70,50,'rgb(117, 218, 188)',this.context,{front : "Payments per hr." , left : "Entry" , right : "Exits"});
-    this.fourthNode.getParentNode().setPosition(800,150,100);
+    //this.fourthNode.getParentNode().setPosition(800,150,100);
 
     this.fifthNode = new BoxNode(this.rootNode.addChild(),"Complete",150,70,50,'rgb(173, 213, 228)',this.context,{front : "Order completions per hr." , left : "Entry" , right : "Exits"});
     this.fifthNode.getParentNode().setPosition(1050,150,100);
@@ -135,6 +140,25 @@ function App(scene) {
 
     this.connectorAltFour = new Connector(this.rootNode.addChild(),100,0,0,true);
     this.connectorAltFour.getParentNode().setPosition(1120,235,-50);
+
+
+    this.paymentSubOneNode = new BoxNode(this.rootNode.addChild(),"Credit Cards",150,70,50,'rgb(171, 204, 116)',this.context,{front : "Payments per hr." , left : "Entry" , right : "Exits"});
+    this.paymentSubOneNode.getParentNode().setPosition(550,190,-100);
+
+    this.paymentSubTwoNode = new BoxNode(this.rootNode.addChild(),"Bank Transfer",150,70,50,'rgb(196, 165, 82)',this.context,{front : "Payments per hr." , left : "Entry" , right : "Exits"});
+    this.paymentSubTwoNode.getParentNode().setPosition(550,390,-100);
+
+    this.connectorSubOne = new Connector(this.rootNode.addChild(),80,1,1,true);
+    this.connectorSubOne.getParentNode().setPosition(460,220,-50);
+
+    this.connectorSubTwo = new Connector(this.rootNode.addChild(),80,1,1,true);
+    this.connectorSubTwo.getParentNode().setPosition(710,220,-50);
+
+    this.connectorSubThree = new Connector(this.rootNode.addChild(),80,1,1,true);
+    this.connectorSubThree.getParentNode().setPosition(460,420,-50);
+
+    this.connectorSubFour = new Connector(this.rootNode.addChild(),80,1,1,true);
+    this.connectorSubFour.getParentNode().setPosition(710,420,-50);
 
 
 
@@ -211,8 +235,10 @@ function App(scene) {
 
     }
 
-    //this.firstNode.addData('front',null);
+    /*Quick Hack for Zoom Effect*/
 
+    this.paymentPos = new Position(this.fourthNode.getParentNode());
+    this.paymentPos.set(800,150,100);
 }
 
 App.prototype.setSelectedBox = function(el){
@@ -277,5 +303,69 @@ App.prototype.triggerAlt = function(){
   this.altNode.getParentNode().setPosition(800,290,100);
 
 }
+
+App.prototype.triggerZoom = function(){
+
+  var that = this;
+  if(this.isZoomed){
+
+    that.fourthNode.contract();
+    this.paymentPos.set(800,150,100,{duration : 500});
+
+      that.paymentSubOneNode.getParentNode().setPosition(550,190,-100);
+
+      that.paymentSubTwoNode.getParentNode().setPosition(550,390,-100);
+
+      that.connectorSubOne.getParentNode().setPosition(460,220,-50);
+
+      that.connectorSubTwo.getParentNode().setPosition(710,220,-50);
+
+      that.connectorSubThree.getParentNode().setPosition(460,420,-50);
+
+      that.connectorSubFour.getParentNode().setPosition(710,420,-50);
+
+
+
+
+    this.isZoomed = false;
+
+  } else {
+
+    this.paymentPos.set(10,30,200,{duration : 500},function(){
+
+      that.fourthNode.expand(that.rootWidth,that.rootHeight,0);
+
+      that.paymentSubOneNode.getParentNode().setPosition(580,190,300);
+
+      that.paymentSubTwoNode.getParentNode().setPosition(580,390,300);
+
+      that.connectorSubOne.getParentNode().setPosition(490,220,300);
+
+      that.connectorSubTwo.getParentNode().setPosition(740,220,300);
+
+      that.connectorSubThree.getParentNode().setPosition(490,420,300);
+
+      that.connectorSubFour.getParentNode().setPosition(740,420,300);
+
+
+    });
+
+    this.isZoomed = true;
+  }
+
+}
+
+App.prototype.getRootWidth = function(){
+
+  return this.rootWidth;
+
+}
+
+App.prototype.getRootHeight = function(){
+
+  return this.rootHeight;
+
+}
+
 
 module.exports = App;

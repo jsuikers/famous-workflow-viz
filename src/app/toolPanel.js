@@ -59,6 +59,9 @@ function __initEvents(){
   $('body').on('click',"#alternative",function(){
     that.context.approot.triggerAlt();
   });
+  $('body').on('click',"#lookinside",function(){
+    that.context.approot.triggerZoom();
+  });
 
 }
 

@@ -23,6 +23,7 @@ function BoxNode(pparentNode, pcaption ,pwidth , pheight ,pdepth,pcolor,pcontext
 
   this.isSelected = false;
   this.isDropdown = false;
+  this.isZoomed = false;
 
   this.rotationObj = new Rotation(this.parentNode);
   this.rotateXAngle = 0;
@@ -45,6 +46,7 @@ function BoxNode(pparentNode, pcaption ,pwidth , pheight ,pdepth,pcolor,pcontext
 
   this.dropdownContainerSize = new Size(this.dropdownContainer);
   this.dropdownContainerSize.setAbsolute(this.width,0,0);
+
 
   _createSides.call(this);
   _createBackground.call(this);
@@ -169,6 +171,21 @@ BoxNode.prototype.drop = function(data){
 
 
 }
+
+BoxNode.prototype.expand = function(x,y,z){
+  /*#####HACKED CODE TO DEMO ZOOMING ONLY##*/
+  this.parentNode.backgroundNode.setAbsoluteSize(x,y,z);
+  this.sidesNodeContainer.front.setAbsoluteSize(x-20,y-40,z);
+
+}
+
+BoxNode.prototype.contract = function(){
+  /*#####HACKED CODE TO DEMO ZOOMING ONLY##*/
+  this.parentNode.backgroundNode.setAbsoluteSize(this.width + 20, this.height +30);
+  this.sidesNodeContainer.front.setAbsoluteSize(this.width, this.height);
+
+}
+
 
 function _createDropdown(){
 
