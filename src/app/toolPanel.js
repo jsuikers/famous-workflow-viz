@@ -56,6 +56,10 @@ function __initEvents(){
     that.context.approot.triggerDropdown();
   });
 
+  $('body').on('click',"#alternative",function(){
+    that.context.approot.triggerAlt();
+  });
+
 }
 
 module.exports = ToolPanel;

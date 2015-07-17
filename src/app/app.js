@@ -107,17 +107,35 @@ function App(scene) {
     this.fifthNode = new BoxNode(this.rootNode.addChild(),"Complete",150,70,50,'rgb(173, 213, 228)',this.context,{front : "Order completions per hr." , left : "Entry" , right : "Exits"});
     this.fifthNode.getParentNode().setPosition(1050,150,100);
 
-    this.connectorOne = new Connector(this.rootNode.addChild(),80,1,1);
+    this.connectorOne = new Connector(this.rootNode.addChild(),80,1,1,true);
     this.connectorOne.getParentNode().setPosition(210,180,50);
 
-    this.connectorTwo = new Connector(this.rootNode.addChild(),80,1,1);
+    this.connectorTwo = new Connector(this.rootNode.addChild(),80,1,1,true);
     this.connectorTwo.getParentNode().setPosition(460,180,50);
 
-    this.connectorThree = new Connector(this.rootNode.addChild(),80,1,1);
+    this.connectorThree = new Connector(this.rootNode.addChild(),80,1,1,true);
     this.connectorThree.getParentNode().setPosition(710,180,50);
 
-    this.connectorFour = new Connector(this.rootNode.addChild(),80,1,1);
+    this.connectorFour = new Connector(this.rootNode.addChild(),80,1,1,true);
     this.connectorFour.getParentNode().setPosition(960,180,50);
+
+
+    this.connectorAltOne = new Connector(this.rootNode.addChild(),100,0,1,false);
+    this.connectorAltOne.getParentNode().setPosition(620,220,-50);
+    //this.connectorAltOne.setOpacity(0);
+
+    this.connectorAltTwo = new Connector(this.rootNode.addChild(),170,1,1,true);
+    this.connectorAltTwo.getParentNode().setPosition(620,320,-50);
+
+    this.altNode = new BoxNode(this.rootNode.addChild(),"Offline Payment",150,70,50,'rgb(117, 218, 188)',this.context,{front : "Payments per hr." , left : "Entry" , right : "Exits"});
+    this.altNode.getParentNode().setPosition(800,290,-100);
+
+    this.connectorAltThree = new Connector(this.rootNode.addChild(),170,1,1,false);
+    this.connectorAltThree.getParentNode().setPosition(960,320,-50);
+
+    this.connectorAltFour = new Connector(this.rootNode.addChild(),100,0,0,true);
+    this.connectorAltFour.getParentNode().setPosition(1120,235,-50);
+
 
 
     var rootZPosition = 25;
@@ -246,6 +264,17 @@ App.prototype.triggerDropdown = function(){
     this.rootNode.selElement.drop(DROPDOWN_STATS[this.rootNode.selElement.getCaption()]);
 
   }
+
+}
+
+App.prototype.triggerAlt = function(){
+
+  this.connectorAltOne.getParentNode().setPosition(620,220,50);
+  this.connectorAltTwo.getParentNode().setPosition(620,320,50);
+  this.connectorAltThree.getParentNode().setPosition(960,320,50);
+  this.connectorAltFour.getParentNode().setPosition(1120,235,50);
+
+  this.altNode.getParentNode().setPosition(800,290,100);
 
 }
 

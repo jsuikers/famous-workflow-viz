@@ -41,7 +41,7 @@ function BoxNode(pparentNode, pcaption ,pwidth , pheight ,pdepth,pcolor,pcontext
 
   this.dropdownContainer.setSizeMode(1,1,1)
     .setAbsoluteSize(this.width,0,0)
-    .setPosition(0,this.height);
+    .setPosition(0,this.height,this.depth);
 
   this.dropdownContainerSize = new Size(this.dropdownContainer);
   this.dropdownContainerSize.setAbsolute(this.width,0,0);
