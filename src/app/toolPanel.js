@@ -52,6 +52,10 @@ function __initEvents(){
     that.context.approot.populateData();
   });
 
+  $('body').on('click',"#dropdown",function(){
+    that.context.approot.triggerDropdown();
+  });
+
 }
 
 module.exports = ToolPanel;

@@ -22,6 +22,7 @@ function BoxNode(pparentNode, pcaption ,pwidth , pheight ,pdepth,pcolor,pcontext
   this.parentNode.container = this;
 
   this.isSelected = false;
+  this.isDropdown = false;
 
   this.rotationObj = new Rotation(this.parentNode);
   this.rotateXAngle = 0;
@@ -29,6 +30,7 @@ function BoxNode(pparentNode, pcaption ,pwidth , pheight ,pdepth,pcolor,pcontext
 
   this.sidesNodeContainer = {};
   this.sidesDOMContainer = {};
+  this.dropdownContainer = this.boxnode.addChild();
 
   this.boxnode.setSizeMode(1,1,1)
     .setAbsoluteSize(this.width,this.height,this.depth);
@@ -37,8 +39,16 @@ function BoxNode(pparentNode, pcaption ,pwidth , pheight ,pdepth,pcolor,pcontext
     .setAbsoluteSize(this.width,this.height,this.depth)
     .setOrigin(0.5,0.5,0);
 
+  this.dropdownContainer.setSizeMode(1,1,1)
+    .setAbsoluteSize(this.width,0,0)
+    .setPosition(0,this.height);
+
+  this.dropdownContainerSize = new Size(this.dropdownContainer);
+  this.dropdownContainerSize.setAbsolute(this.width,0,0);
+
   _createSides.call(this);
   _createBackground.call(this);
+  _createDropdown.call(this);
 
   this.parentNode.addUIEvent('click');
   this.parentNode.onReceive = function(event,payload){
@@ -63,6 +73,10 @@ function BoxNode(pparentNode, pcaption ,pwidth , pheight ,pdepth,pcolor,pcontext
 
 BoxNode.prototype.getParentNode = function(){
   return this.boxnode;
+}
+
+BoxNode.prototype.getCaption = function(){
+  return this.caption;
 }
 
 BoxNode.prototype.select = function(){
@@ -120,6 +134,51 @@ BoxNode.prototype.addData = function(side,data){
 
     $(affectedSide + " .content").peity(data.type,{height : 40 , width : data.width});
     $(affectedSide + " .heading").html(this.sidecaptions[side]);
+
+}
+
+BoxNode.prototype.drop = function(data){
+
+  if(this.isDropdown){
+    this.dropdownContainerSize.setAbsolute(this.width,0,0,{duration : 500});
+    this.dropdownDOM.setContent('');
+    this.isDropdown = false;
+  } else {
+
+    var that = this;
+
+    var htmlContent = '<div> \
+      <div style="float:left;width:50%;height:100%;text-align:right;"> \
+        <span>Pass Through :</span></br> \
+        <span>Abort :</span></br> \
+        <span>Fail :</span></br> \
+      </div> \
+      <div style="float:right;width:50%;height:100%;text-align:center;"> \
+      <span>' + data[0] + '%</span></br> \
+      <span>' + data[1] + '%</span></br> \
+      <span>' + data[2] + '%</span></br> \
+      </div> \
+    </div>'
+
+    this.dropdownContainerSize.setAbsolute(this.width,this.height*2,0,{duration : 500},function(){
+        that.dropdownDOM.setContent(htmlContent);
+    });
+
+    this.isDropdown = true;
+  }
+
+
+}
+
+function _createDropdown(){
+
+
+  this.dropdownDOM = new DOMElement(this.dropdownContainer,{
+      classes : ['dropdownbackground']
+    }
+  );
+
+
 
 }
 

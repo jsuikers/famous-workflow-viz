@@ -15,6 +15,15 @@ var BoxNavPanel = require('./boxNavPanel.js');
 var ToolPanel = require('./ToolPanel.js');
 var Connector = require('./connector.js');
 
+var DROPDOWN_STATS = {
+  "Checkout" : [43,53,4],
+  "Review" : [35,40,25],
+  "Shipping" : [38,51,11],
+  "Payment" : [45,47,8],
+  "Complete" : [56,33,11],
+
+}
+
 var DATA_SET = [
   "5,0,1,14,12,15,10,18,14,3,10,8,7,1,5",
   "5,20,20,14,41",
@@ -55,8 +64,8 @@ function App(scene) {
         .setOrigin(0.5,0.5)
         .setPosition(APP_OFFSET,APP_OFFSET);
 
-    var rootCam = new Camera(scene);
-    rootCam.setDepth(100000);
+    //var rootCam = new Camera(scene);
+    //rootCam.setDepth(100000);
     //rootCam.setFlat();
     this.context = {
       appscene : scene,
@@ -80,6 +89,9 @@ function App(scene) {
 
     this.secondNode = new BoxNode(this.rootNode.addChild(),"Review",150,70,50,'rgb(215, 208, 229)',this.context,{front : "Reviews per hr." , left : "Entry" , right : "Exits"});
     this.secondNode.getParentNode().setPosition(300,150,100);
+
+    //this.dummyNode = new BoxNode(this.rootNode.addChild(),"Dummy",750,470,150,'rgb(244, 225, 173)',this.context,{front : "Checkouts per hr." , left : "Entry" , right : "Exits"});
+    //this.dummyNode.getParentNode().setPosition(350,350,100);
 
 
 
@@ -227,6 +239,14 @@ App.prototype.populateData = function(){
 
 }
 
+App.prototype.triggerDropdown = function(){
 
+  if(this.rootNode.selElement){
+
+    this.rootNode.selElement.drop(DROPDOWN_STATS[this.rootNode.selElement.getCaption()]);
+
+  }
+
+}
 
 module.exports = App;
