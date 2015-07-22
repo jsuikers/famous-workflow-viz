@@ -134,8 +134,23 @@ BoxNode.prototype.addData = function(side,data){
 
     $(affectedSide + " .content").html('<span class="' + data.type + '">' + data.data + '</span>');
 
-    $(affectedSide + " .content").peity(data.type,{height : 40 , width : data.width});
+    var updatingChart = $(affectedSide + " .content").peity(data.type,{height : 40 , width : data.width});
     $(affectedSide + " .heading").html(this.sidecaptions[side]);
+
+    if(side == "front"){
+
+      setInterval(function() {
+        var random = Math.round(Math.random() * 50)
+        var values = updatingChart.text().split(",")
+        values.shift()
+        values.push(random)
+
+        updatingChart
+          .text(values.join(","))
+          .change()
+      }, 10000);
+
+    }
 
 }
 
@@ -150,6 +165,9 @@ BoxNode.prototype.drop = function(data){
     var that = this;
 
     var htmlContent = '<div> \
+      <div style="border-bottom:2px solid black;"> \
+       <span style="font-weight:bold">Key Stats</span> \
+      </div> \
       <div style="float:left;width:50%;height:100%;text-align:right;"> \
         <span>Pass Through :</span></br> \
         <span>Abort :</span></br> \
